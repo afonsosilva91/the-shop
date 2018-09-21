@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  app:
+    container_name: the-shop-app
+    build:
+      context: .
+    ports:
+      - '8080:5000'
+  api:
+    container_name: the-shop-api
+    image: nginx
+    ports:
+      - '8081:80'
+    volumes:
+      - './api:/var/www/api'
+      - './nginx.conf:/etc/nginx/conf.d/default.conf'
+    links:
+        - api-php
+  api-php:
+    container_name: the-shop-api-php
+    image: php:7-fpm
+    volumes:
+      - './api:/var/www/api'
+
+  # db:
+  #   image: mysql:5.7
+  #   container_name: the-shop-db
+  #   environment:
+  #      MYSQL_ROOT_PASSWORD: the_pass
+  #      MYSQL_DATABASE: the_shop_db
+  #      MYSQL_USER: the_user
+  #      MYSQL_PASSWORD: the_pass
