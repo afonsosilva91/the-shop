@@ -5,8 +5,10 @@ services:
     container_name: the-shop-app
     build:
       context: .
+      dockerfile: docker/app.dockerfile
     ports:
       - '8080:5000'
+  
   api:
     container_name: the-shop-api
     image: nginx
@@ -14,20 +16,26 @@ services:
       - '8081:80'
     volumes:
       - './api:/var/www/api'
-      - './nginx.conf:/etc/nginx/conf.d/default.conf'
+      - './docker/nginx.conf:/etc/nginx/conf.d/default.conf'
     links:
         - api-php
+        - db
+  
   api-php:
     container_name: the-shop-api-php
-    image: php:7-fpm
+    build:
+      context: .
+      dockerfile: docker/api-php.dockerfile
     volumes:
       - './api:/var/www/api'
+    links:
+        - db
 
-  # db:
-  #   image: mysql:5.7
-  #   container_name: the-shop-db
-  #   environment:
-  #      MYSQL_ROOT_PASSWORD: the_pass
-  #      MYSQL_DATABASE: the_shop_db
-  #      MYSQL_USER: the_user
-  #      MYSQL_PASSWORD: the_pass
+  db:
+    image: mysql:5.7
+    container_name: the-shop-db
+    environment:
+       MYSQL_ROOT_PASSWORD: the_pass
+       MYSQL_DATABASE: the_shop_db
+       MYSQL_USER: the_user
+       MYSQL_PASSWORD: the_pass

@@ -11,10 +11,13 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return json_encode([
+$router->get('/', function () {
+
+    return response()->json([
         'status' => false,
         'type' => 'error_request',
         'message' => 'Staff Only'
     ]);
 });
+
+$router->post('/order', 'OrderController@add');
