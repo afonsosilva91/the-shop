@@ -39,3 +39,14 @@ services:
        MYSQL_DATABASE: the_shop_db
        MYSQL_USER: the_user
        MYSQL_PASSWORD: the_pass
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: the-shop-db-pma
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - '8082:80'
