@@ -16,7 +16,11 @@ class CreateOrderTable extends Migration
         Schema::create('order', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('customer-id');
+            $table->double('total_order', 8, 2);
+            $table->double('total_discount', 8, 2);
+            $table->text('discounts');
             $table->double('total', 8, 2);
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 

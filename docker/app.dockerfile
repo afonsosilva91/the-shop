@@ -8,7 +8,7 @@ RUN npm install --silent
 
 COPY app/ /app
 
-RUN npm install -g --silent\
+RUN npm install -g --silent \
     react-scripts@1.1.1 \
     serve \
     && npm run build

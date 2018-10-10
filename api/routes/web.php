@@ -20,4 +20,5 @@ $router->get('/', function () {
     ]);
 });
 
-$router->post('/order', 'OrderController@add');
+$router->post('/order/new', 'OrderController@new');
+$router->post('/order/discounts', 'OrderController@discounts');
