@@ -8,6 +8,57 @@ use Illuminate\Support\Facades\DB;
 class OrderController extends Controller
 {
     /**
+     * List
+     * 
+     * List orders from database.
+     *
+     * @return Response
+     */
+    public function list(Request $request) {
+
+        $_type = 'error_list_orders';
+        $_message = 'Bad Request';
+
+        $list = [];
+
+        $orders = DB::table('order')->get();
+        foreach($orders as $order) {
+            
+            $item = [
+                'id' => $order->id,
+                'total_order' => $order->total_order,
+                'total_discount' => $order->total_discount,
+                'discounts' => json_decode($order->discounts, true),
+                'total' => $order->total,
+                'date' => $order->created_at
+            ];
+
+            # Customer
+            $customer = DB::table('customer')
+                ->where([ 'id' => $order->{'customer-id'}])
+                ->first();
+
+            $item['customer'] = collect($customer);
+
+            # Order Items
+            $items = DB::table('order-item')
+                ->where([ 'order-id' => $order->id])
+                ->get();
+
+            $item['items'] = collect($items);
+
+            $list[] = $item;
+        }
+
+        return response()->json([
+            'status' => true,
+            'type' => 'success_list_orders',
+            'message' => 'List orders with success.',
+            'data' => $list
+        ]);
+    }
+
+    /**
      * New
      * 
      * Add new order request into database.

@@ -5,6 +5,17 @@ body {
   background: #eeeeee;
 }
 
-.order-list {
-  margin-top: 5%; 
+.content {
+  padding-top: 5%; 
+}
+
+.order-row {
+  cursor: pointer;
+}
+.order-row:hover {
+  background-color: #efefef; 
+}
+
+.box-actions {
+  margin-top: 10%;
 }

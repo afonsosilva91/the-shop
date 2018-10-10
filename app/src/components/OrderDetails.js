@@ -1,7 +1,5 @@
-import React from 'react';
+import React, { Component } from "react";
 import { Route } from 'react-router-dom'
-
-import axios from 'axios'
 
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -11,26 +9,21 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Button from '@material-ui/core/Button';
 
-
-class OrdersList extends React.Component {
-
+ 
+class OrderDetails extends Component {
     constructor () {
         super()
 
         this.state = {
-          orders: []
+          order: []
         }
-    }
-
-    componentWillMount() {
-        axios.get('http://localhost:8081/orders')
-            .then( response => this.setState({orders: response.data.data}) )
     }
 
     render() {
         return (
-            <div className="order-list">
+            <div className="order-details">
                 <Grid container direction="row" justify="center" alignItems="center" xs={12}>
                     <Paper>
                         <Table>
@@ -45,27 +38,34 @@ class OrdersList extends React.Component {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {this.state.orders.map(order => {
+                                {this.state.order.map(order => {
                                     return (
-                                        <Route render={({ history }) => (
-                                            <TableRow key={order.id} className="order-row" onClick={(order) => { history.push({ pathname: '/details', state: { order: order }}) }}>
-                                                <TableCell>{order.id}</TableCell>
-                                                <TableCell>({order.customer.id}) {order.customer.name}</TableCell>
-                                                <TableCell>{order.total_order}</TableCell>
-                                                <TableCell>{order.total_discount}</TableCell>
-                                                <TableCell>{order.total}</TableCell>
-                                                <TableCell>{order.date}</TableCell>
-                                            </TableRow>
-                                        )} />
+                                        <TableRow key={order.id}>
+                                            <TableCell>{order.id}</TableCell>
+                                            <TableCell>({order.customer.id}) {order.customer.name}</TableCell>
+                                            <TableCell>{order.total_order}</TableCell>
+                                            <TableCell>{order.total_discount}</TableCell>
+                                            <TableCell>{order.total}</TableCell>
+                                            <TableCell>{order.date}</TableCell>
+                                        </TableRow>
                                     );
                                 })}
                             </TableBody>
                         </Table>
                     </Paper>
                 </Grid>
+
+                <div class="box-actions">
+                    <Route render={({ history }) => (
+                        <Button variant="contained" color="default" onClick={() => { history.push('/') }}>Back</Button>
+                        
+                    )} />
+                    <Button variant="contained" color="primary">Editar</Button>    
+                </div>
+                
             </div>
         );
     }
 }
-
-export default OrdersList;
+ 
+export default OrderDetails;
