@@ -13,6 +13,4 @@ close:
 	docker-compose stop
 
 bankrupt:
-	docker-compose down
-	
-#docker-compose down --rmi 'all'
+	docker-compose down --rmi 'all'

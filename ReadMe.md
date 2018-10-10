@@ -13,6 +13,14 @@ Requirments:
 
 ## Usage
 
+### Open Store
+* make open
 * Web: http://localhost:8080
 * Api: http://localhost:8081
 * PhpMyAdmin: http://localhost:8082 (USER: the_user | PASS: the_pass)
+
+### Close Store
+* make close
+
+## Uninstall
+* make bankrupt
